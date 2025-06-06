@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Additional Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #afd8d6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background-color: white;
+      margin: 20px auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: rgba(114, 97, 210, 0.841);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    input[type="password"],
+    input[type="url"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0 20px 0;
+      display: inline-block;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      background: white;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: rgba(146, 134, 216, 0.841);
+    }
+
+    .clearfix {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .signupbtn, .cancelbtn {
+      flex: 1;
+      padding: 14px 20px;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .signupbtn {
+      background-color: rgba(114, 97, 210, 0.841);
+    }
+
+    .cancelbtn {
+      background-color: #ff6b6b;
+    }
+
+    .signupbtn:hover, .cancelbtn:hover {
+      background-color: rgb(71, 43, 230);
+    }
+
+    small {
+      display: block;
+      color: #666;
+      margin-top: -15px;
+      margin-bottom: 20px;
+      font-size: 0.9em;
+    }
+
+    label {
+      color: #333;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #f0f0f0;
+      margin: 25px 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+        margin: 10px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .signupbtn, .cancelbtn {
+        padding: 12px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <form id="additional-form">
+    <div class="container">
+      <h1>Additional Details</h1>
+      <hr>
+
+      <label for="password"><b>Password</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="password" placeholder="Enter Password" id="password" required pattern=".{6,}" title="Minimum 6 characters" />
+
+      <label for="confirm_password"><b>Confirm Password</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="password" placeholder="Confirm Password" id="confirm_password" required />
+
+      <label for="college_id"><b>College ID Google Drive Link</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="url" id="college_id" placeholder="Paste Google Drive link" required />
+      <small>Make sure the file is shared as "Anyone with the link can view"</small>
+
+      <label for="aadhar"><b>Aadhar Card Google Drive Link</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="url" id="aadhar" placeholder="Paste Google Drive link" required />
+      <small>Make sure the file is shared as "Anyone with the link can view"</small>
+
+      <label for="pan"><b>PAN Card Google Drive Link</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="url" id="pan" placeholder="Paste Google Drive link" required />
+      <small>Make sure the file is shared as "Anyone with the link can view"</small>
+
+      <div class="clearfix">
+        <button type="button" class="cancelbtn" onclick="window.history.back()">Back</button>
+        <button type="submit" class="signupbtn">Submit</button>
+      </div>
+
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('additional-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      // Retrieve data from Page 1
+      const regData = JSON.parse(sessionStorage.getItem('registrationData') || '{}');
+
+      if (Object.keys(regData).length === 0) {
+        alert("Missing registration data. Please complete the first page.");
+        window.location.href = 'page_1(main).html';
+        return;
+      }
+
+      // Append additional data
+      regData.password = password;
+      regData.college_id_url = document.getElementById('college_id').value.trim();
+      regData.aadhar_url = document.getElementById('aadhar').value.trim();
+      regData.pan_url = document.getElementById('pan').value.trim();
+      regData.timestamp = new Date().toISOString(); // optional: override timestamp
+
+      const sheetData = { data: regData };
+
+      try {
+        const response = await fetch('https://sheetdb.io/api/v1/95awrlh3mgzwk', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sheetData)
+        });
+
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          sessionStorage.removeItem('registrationData'); // clear session after successful submission
+          window.location.href = 'success.html';
+        } else {
+          const result = await response.json();
+          console.error("Submission error:", result);
+          alert("Submission failed. Please try again.");
+        }
+
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+  </script>
+
+</body>
+</html>

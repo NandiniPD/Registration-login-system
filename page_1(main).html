@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #afd8d6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      padding: 40px;
+      background-color: white;
+      max-width: 500px;
+      width: 100%;
+      margin: 20px auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: rgba(114, 97, 210, 0.841);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    input[type=text], input[type=email], input[type=tel], input[type=date], input[type=number] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0 20px 0;
+      display: inline-block;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      background: white;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: rgba(146, 134, 216, 0.841);
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #f0f0f0;
+      margin: 25px 0;
+    }
+
+    .signupbtn, .cancelbtn {
+      background-color: rgba(114, 97, 210, 0.841);
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .signupbtn:hover, .cancelbtn:hover {
+      background-color: rgb(71, 43, 230);
+    }
+
+    .cancelbtn {
+      background-color: #ff6b6b;
+    }
+
+    .gender-container {
+    display: flex;
+    justify-content: space-between;
+    background-color:white;
+    padding: 6px 15px;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    }
+
+    .gender-container label {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-weight:500;
+      color: #3f3f3f;
+      cursor: pointer;
+    }
+
+    .error {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    label {
+      color: #333;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    a {
+      color: rgba(114, 97, 210, 0.841);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+        margin: 10px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .signupbtn, .cancelbtn {
+        padding: 12px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form id="registration-form">
+    <div class="container">
+      <h1>Registration Form</h1>
+      <hr />
+
+      <label for="f_name"><b>First Name</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="text" placeholder="Enter First Name" name="data[f_name]" id="f_name" required pattern="[a-zA-Z]{1,15}">
+
+      <label for="l_name"><b>Last Name</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="text" placeholder="Enter Last Name" name="data[l_name]" id="l_name" required pattern="[a-zA-Z]{1,15}">
+
+      <label for="phone_no"><b>Phone No</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="tel" placeholder="Enter Phone No" name="data[phone_no]" id="phone_no" required pattern="[6-9]{1}[0-9]{9}">
+
+      <label for="email"><b>Email</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="email" placeholder="Enter Email" name="data[email]" id="email" required>
+
+      <label for="dob"><b>Date of Birth</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="date" name="data[dob]" id="dob" required onchange="calculateAge()">
+
+      <label for="age"><b>Age</b></label>
+      <input type="number" name="data[age]" id="age" disabled>
+
+      <label for="clg"><b>College Name</b> <span style="color: #ff6b6b;">*</span></label>
+      <input type="text" placeholder="Enter College Name" name="data[clg]" id="clg" required>
+
+      <p><b>Gender</b> <span style="color: #ff6b6b;">*</span></p>
+      <div class="gender-container">
+        <label for="gender_m"><input type="radio" name="data[gender]" id="gender_m" value="Male" required> Male</label>
+        <label for="gender_f"><input type="radio" name="data[gender]" id="gender_f" value="Female" required> Female</label>
+        <label for="gender_o"><input type="radio" name="data[gender]" id="gender_o" value="Other" required> Other</label>
+      </div>
+
+
+      <p>By clicking next, you agree to our <a href="#" style="color: dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" class="cancelbtn" onclick="window.location.href='/'">Cancel</button>
+        <button type="submit" class="signupbtn">Next</button>
+        <div id="error-msg" class="error"></div>
+      </div>
+
+      <div style="text-align:center; margin-top: 20px;">
+        Already registered? <a href="login.html" style="color:dodgerblue;">Login here</a>
+      </div>
+    </div>
+  </form>
+
+  <script>
+    const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/95awrlh3mgzwk'; // Use your actual SheetDB API
+
+    function calculateAge() {
+      const dob = new Date(document.getElementById('dob').value);
+      if (isNaN(dob.getTime())) return;
+
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+
+      document.getElementById('age').value = age;
+    }
+
+    document.getElementById('registration-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const errorMsg = document.getElementById('error-msg');
+      errorMsg.textContent = '';
+
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
+
+      const email = document.getElementById('email').value.trim();
+
+      try {
+        const response = await fetch(`${SHEETDB_API_URL}/search?email=${encodeURIComponent(email)}`);
+        const data = await response.json();
+
+        if (data.length > 0) {
+          errorMsg.textContent = 'This email is already registered. Please use a different email.';
+          return;
+        }
+
+        const formData = {
+          f_name: document.getElementById('f_name').value,
+          l_name: document.getElementById('l_name').value,
+          phone_no: document.getElementById('phone_no').value,
+          email: email,
+          dob: document.getElementById('dob').value,
+          age: document.getElementById('age').value,
+          clg: document.getElementById('clg').value,
+          gender: document.querySelector('input[name="data[gender]"]:checked').value,
+          timestamp: new Date().toISOString()
+        };
+
+        sessionStorage.setItem('registrationData', JSON.stringify(formData));
+        window.location.href = 'page_2.html';
+
+      } catch (error) {
+        console.error('Error:', error);
+        errorMsg.textContent = 'Error connecting to server. Please try again later.';
+      }
+    });
+  </script>
+
+</body>
+</html>

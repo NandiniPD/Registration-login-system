@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Successful</title>
+    <style>
+        body {
+            background-color: #afd8d6; /* Background color */
+            color: rgba(146, 134, 216, 0.841); /* Text color */
+            text-align: center;
+            padding: 5% 0; /* Vertical padding as a percentage of the viewport height */
+        }
+
+        h1 {
+            font-size: 4rem; /* Large font size */
+        }
+
+        p {
+            font-size: 2rem; /* Medium font size */
+        }
+
+        @media screen and (max-width: 768px) {
+            /* Adjust styles for screens with a maximum width of 768px (e.g., tablets) */
+            body {
+                padding: 10% 0; /* Increase vertical padding for smaller screens */
+            }
+
+            h1 {
+                font-size: 3rem; /* Reduce font size for smaller screens */
+            }
+
+            p {
+                font-size: 1.5rem; /* Reduce font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Registered Successful</h1>
+    <p>Thank you for registering up! Your data has been stored successfully.</p>
+    <p style="font-size: 1rem; color: #555;">Redirecting you to login page...</p>
+
+</body>
+
+<script>
+  setTimeout(() => {
+    window.location.href = 'login.html';
+  }, 900);
+</script>
+
+</html>
